@@ -34,7 +34,7 @@
 
                 <div class="flex items-center mb-2 sm:mb-0">
                     <img src="{{ Vite::asset('resources/assets/img/logo.png') }}" alt="Logo"
-                        class="inline w-10 h-10 mr-2">
+                        class="inline w-17 h-15 mr-2">
                     <h1 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
                         Buscador de Livros no Google Books
                     </h1>
