@@ -8,6 +8,9 @@ export default defineConfig({
             input: [
                 "resources/css/app.css",
                 "resources/js/app.js",
+                "resources/js/register.js",
+
+                // Imagens
                 "resources/assets/img/favicon.ico",
                 "resources/assets/img/logo.png",
             ],

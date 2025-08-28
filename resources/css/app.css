@@ -18,3 +18,7 @@
     --color-primary: #2a4b7c;
     --color-accent-yellow: #f2a100;
 }
+
+body {
+    font-family: "Poppins", sans-serif;
+}

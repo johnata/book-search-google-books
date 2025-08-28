@@ -1,4 +1,6 @@
 import "./bootstrap";
+import "@tailwindplus/elements";
+
 document.addEventListener("DOMContentLoaded", () => {
     const themeToggleBtn = document.getElementById("theme-toggle");
     const html = document.documentElement;
