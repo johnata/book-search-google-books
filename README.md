@@ -22,6 +22,12 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
+### APP_KEY
+
+```
+php artisan key:generate
+```
+
 ### Migrate
 
 ```
