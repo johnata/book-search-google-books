@@ -8,7 +8,7 @@ export default defineConfig({
             input: [
                 "resources/css/app.css",
                 "resources/js/app.js",
-                "resources/js/register.js",
+                "resources/js/password-field.js",
 
                 // Imagens
                 "resources/assets/img/favicon.ico",

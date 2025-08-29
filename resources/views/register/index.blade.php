@@ -107,5 +107,5 @@
     </div>
 @endsection
 @push('scripts')
-    @vite('resources/js/register.js')
+    @vite('resources/js/password-field.js')
 @endpush
