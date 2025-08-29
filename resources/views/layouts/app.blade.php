@@ -103,7 +103,7 @@
                                     class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 dark:text-gray-300 dark:focus:bg-white/5 focus:outline-hidden">Registrar</a>
                             @endguest
                             @auth
-                                <a href="{{ route('profile.edit') }}"
+                                <a href="{{ route('profile.show', ['profile' => $user]) }}"
                                     class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 dark:text-gray-300 dark:focus:bg-white/5 focus:outline-hidden">Perfil</a>
                                 <form method="POST" action="{{ route('logout') }}"
                                     class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 dark:text-gray-300 dark:focus:bg-white/5 focus:outline-hidden">
@@ -119,7 +119,7 @@
         </div>
     </nav>
 
-    <div class="w-full max-w-6xl mx-auto pt-5 p-6 duration-300">
+    <div class="w-full max-w-6xl mx-auto pt-5 pb-5 duration-300">
         @yield('content')
     </div>
     @stack('scripts')

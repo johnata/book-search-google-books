@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Locale;
 
 class BookController extends Controller
 {
+    protected $user;
+
     protected $filterMapping = [
         'all' => 'Todos os campos',
         'intitle' => 'Título',
@@ -17,9 +20,14 @@ class BookController extends Controller
         'isbn' => 'ISBN',
     ];
 
+    public function __construct()
+    {
+        $this->user = Auth::user() ?? null;
+    }
+
     public function index()
     {
-        return view('books.index');
+        return view('books.index', ['user' => $this->user]);
     }
 
     public function search(Request $request)
@@ -33,7 +41,7 @@ class BookController extends Controller
         $currentFilter = $filterMapping[$searchType] ?? 'Desconhecido';
 
         if (empty($query)) {
-            return view('books.index', ['books' => null, 'query' => null, 'totalItems' => 0]);
+            return view('books.index', ['user' => $this->user, 'books' => null, 'query' => null, 'totalItems' => 0]);
         }
 
         if ($searchType == 'all') {
@@ -56,11 +64,32 @@ class BookController extends Controller
 
                 // Adiciona o nome do idioma para cada livro (Princípio de MVC - Separando responsabilidades)
                 $books = collect($books)->map(function ($book) {
+                    $identifierOther = null;
+                    $book['volumeInfo']['isbn'] = null;
                     $book['volumeInfo']['languageName'] = $this->getLanguageName($book['volumeInfo']['language'] ?? '');
+                    if (isset($book['volumeInfo']['industryIdentifiers'])) {
+                        foreach($book['volumeInfo']['industryIdentifiers'] as $identifier) {
+                            if($identifier['type'] === 'ISBN_13') {
+                                // isbn master (padrão atual, com 13 dígitos)
+                                $book['volumeInfo']['isbn'] = $identifier['identifier'];
+                                break;
+                            } elseif($identifier['type'] === 'ISBN_10') {
+                                // isbn secundario (sua utilização foi descontinuada em 2007)
+                                $book['volumeInfo']['isbn'] = $identifier['identifier'];
+                            } else {
+                                $identifierOther = $identifier['identifier'] . ' (' . $identifier['type'] . ')';
+                            }
+                        }
+                        if (!$book['volumeInfo']['isbn'] && $identifierOther) {
+                            $book['volumeInfo']['isbn'] = $identifierOther;
+                        }
+                    }
+
                     return $book;
                 });
+                $user = $this->user;
 
-                return view('books.index', compact('filterMapping', 'currentFilter', 'books', 'query', 'totalItems', 'currentPage', 'searchType'));
+                return view('books.index', compact('user', 'filterMapping', 'currentFilter', 'books', 'query', 'totalItems', 'currentPage', 'searchType'));
             } else {
                 return back()->with('error', 'Erro ao conectar com a API de livros. Tente novamente.');
             }

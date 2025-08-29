@@ -48,4 +48,23 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("theme", newTheme);
         });
     }
+
+    addRequiredAsterisks();
 });
+
+// Função para adicionar o asterisco a campos obrigatórios
+function addRequiredAsterisks() {
+    const requiredInputs = document.querySelectorAll("input[required]");
+    requiredInputs.forEach((input) => {
+        const label = document.querySelector(`label[for="${input.id}"]`);
+        if (label) {
+            // Verifica se o asterisco já foi adicionado
+            if (!label.querySelector(".required-asterisk")) {
+                const asterisk = document.createElement("span");
+                asterisk.textContent = " *";
+                asterisk.classList.add("required-asterisk", "text-red-500");
+                label.appendChild(asterisk);
+            }
+        }
+    });
+}

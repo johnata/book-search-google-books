@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,14 +23,8 @@ Route::prefix('/')->group(function () {
 
 // Protected routes
 Route::middleware(['auth'])->group(function () {
-    // Rotas de perfil
-//     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
-    // temporary routes for login, logout, and profile edit (to be implemented later)
-    Route::get('/profile/edit', function () {
-        return 'Página de edição de perfil (em construção)';
-    })->name('profile.edit');
+    // Rotas de perfil de usuário
+    Route::resource('profile', ProfileController::class)->except(['index', 'create']);
 
     // Rota de logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
