@@ -95,6 +95,14 @@
                     Registrar
                 </button>
             </form>
+            <div class="mt-6 text-center text-sm">
+                <p class="text-gray-600">
+                    Já tem uma conta?
+                    <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        Efetue login aqui
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 @endsection
